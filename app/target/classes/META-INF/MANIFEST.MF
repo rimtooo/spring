@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Build-Jdk-Spec: 17
+Class-Path: spring-context-6.1.11.jar spring-aop-6.1.11.jar spring-beans
+ -6.1.11.jar spring-core-6.1.11.jar spring-jcl-6.1.11.jar spring-express
+ ion-6.1.11.jar micrometer-observation-1.12.8.jar micrometer-commons-1.1
+ 2.8.jar
+Main-Class: com.yedam.app.MainExample
+Created-By: Maven Integration for Eclipse
+

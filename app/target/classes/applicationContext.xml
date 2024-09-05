@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	
+	<!-- <beans:bean id="tv" class="com.yedam.app.spring.TV"/> -->
+	
+	<!-- DI : XML 방식 -->
+	<bean id="cf" class="com.yedam.app.spring.xml.Chef"/>
+	<bean class="com.yedam.app.spring.xml.Restaurant"> 
+		<!-- 생성자 주입 -->
+		<!-- 생성자 호출(ref="참조") = 셰프를 매개변수로 전달하고자. -->
+		 <constructor-arg ref="cf" /> 
+		
+		<!-- 세터 주입 -->
+	    <property name="chef" ref="cf"/>
+	</bean> 
+	
+	<!-- DI : 어노테이션 방식 -->
+	<context:component-scan base-package="com.yedam.app.spring.anotation" />
+	<!-- DI : Java base Configuration 방식 -->
+	<context:component-scan base-package="com.yedam.app.spring.javabase" />
+	
+</beans>
