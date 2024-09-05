@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!--/* 원래는 context를 사용하지만 우리가 원하는 형태로 작동을 안해서 강제로 value로 사용함. */-->
+<meta name="ctxPath" th:value="${contextPath}">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<div>
+		<h3>전체 사원 조회</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>사원번호</th>
+					<th>이름</th>
+					<th>입사일자</th>
+					<th>업무</th>
+				</tr>
+			</thead>		
+			<tbody>
+				<th:block th:each="info, sts : ${emps}">
+					<!-- info <=> EmpVO => <tr/> -->
+					<!-- 반복하고자 하는 코드 -->
+					<!--/* <tr th:onclick="|location.href='@{/empInfo(employeeId=${info.employeeId})}'|"> */-->
+					<tr>
+						<td th:text="${sts.count}"/>
+						<!--/* 타임리프에 인라인 문법 [[${값}]] */-->
+						<td>[[${info.employeeId}]]</td>
+						<td>[[${info.lastName}]]</td>
+						<!--/* <td>[[${info.hireDate}]]</td> */-->
+						<td>[[${#dates.format(info.hireDate, "yyyy년 MM월 dd일")}]]</td>
+						<td>[[${emps[sts.index].jobId}]]</td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>	
+	</div>
+    <script>
+    	const context = $('meta[name="ctxPath"]').attr('value');
+        $('tbody > tr').on('click', function(event){
+            let trTag = event.currentTarget;
+            let eid = $(trTag).children().eq(1).text();
+            let url = context + '/empInfo?employeeId=' + eid;
+            location.href=url;
+        });
+    </script>
+</body>
+</html>
