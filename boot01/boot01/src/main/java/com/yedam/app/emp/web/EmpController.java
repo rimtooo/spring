@@ -90,7 +90,7 @@ public class EmpController {
 	
 	// 수정처리 할 때 2가지 경우를 다 해보겠다. 
 	// 수정 - 처리(기능) : AJAX => QueryString : POST
-	@PostMapping("empUpdate")
+	//@PostMapping("empUpdate")
 	//반환하는 리턴타입에 대해 달라졌다라는 의미 // 응답이기 때문에 리턴하기 전에 해야한다.
 	@ResponseBody // AJAX 
 	public Map<String, Object> empUpdateAJAXQueryString(EmpVO empVO){
@@ -98,7 +98,7 @@ public class EmpController {
 	}// end empUpdateAJAXQueryString
 	
 	// 수정 - 처리(기능) : AJAX => JSON (@RequestBody) : POST
-	//@PostMapping("empUpdate") 
+	@PostMapping("empUpdate") 
 	/*
 	 * {POST [/empUpdate]}: There is already 'empController' bean method 이렇게 발생하는 경우는 위에 어노테이션이 중복이기 때문에 발생한다.
 	 * 
