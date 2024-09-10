@@ -19,6 +19,7 @@ public class SpringSecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
+	/*
 	@Bean // 메모리상 인증정보 등록 => 테스트 전용
 	InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 		UserDetails user
@@ -35,13 +36,13 @@ public class SpringSecurityConfig {
 		.username("admin1")
 		.password(passwordEncoder().encode("1234")) // 암호화 상태로 넣기
 		//.roles("ADMIN") // ROLE_USER 권한 : 무조건 앞에 ROLE_붙음
-		.authorities("ROLE_ADMIN") // 권한 : 자유롭게
+		.authorities("ROLE_ADMIN","ROLE_USER") // 권한 : 자유롭게
 		.build();
 		
 		return new InMemoryUserDetailsManager(user, admin);
 		
 	}
-	
+*/
 	// 인증 및 인가
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -50,15 +51,17 @@ public class SpringSecurityConfig {
 		http
 			.authorizeHttpRequests( authrize -> authrize
 					.requestMatchers("/", "/all").permitAll()
-					.requestMatchers("/user/**").hasRole("USER")
+					.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 					.anyRequest().authenticated()
 			)
 			.formLogin(formLogin -> formLogin
 					  .defaultSuccessUrl("/all"))
 			.logout(logout -> logout
-					.logoutSuccessUrl("/all"));
+					.logoutSuccessUrl("/all")
+					.invalidateHttpSession(true));
 		
+		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
 }
