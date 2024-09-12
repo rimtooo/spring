@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org"
+				 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				 layout:decorate="~{common/layouts/default_layout}"
+				 layout:fragment="Content">
+<body>
+	<div class="text-center">
+		<h3>게시판 목록</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th> <!-- yyyy년MM월dd일 -->
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="info : ${boards}"> <!-- 조건, 반복문 있을 때 구분하기 위해 th:block -->
+					<tr><!-- 여기 onclick 넣어도 됨. -->
+						<td>[[${info.bno}]]</td>	
+						<td>[[${info.title}]]</td>	
+						<td>[[${info.writer}]]</td>	
+						<td>[[${#dates.format(info.regdate, "yyyy년 MM월 dd일")}]]</td>	
+					</tr>
+				</th:block>		
+			</tbody>
+		</table>
+	</div>
+	<script>
+		//제이쿼리 객체 생성
+		$('tbody > tr').on('click', function(event){
+			let trTag = event.currentTarget;
+			let bno = $(trTag).children().first().text();
+			let url = `/boardInfo?bno=${bno}`;
+			location.href=url;
+		});
+	</script>
+</body>
+</html>
